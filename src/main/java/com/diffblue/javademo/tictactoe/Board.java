@@ -11,6 +11,34 @@ public class Board {
     }
 
     /**
+     * Choose a random free cell for my next move.
+     * @param player to place in the cell.
+     */
+    public void randomMove(Player player) {
+        // Find all the available cells
+        ArrayList<Coordinate> availableCells = new ArrayList<>();
+        for (int i=0; i<3; i++) {
+            for (int j=0; j<3; j++) {
+                Coordinate currentCell = new Coordinate(i, j);
+                if (getCell(currentCell) == null) {
+                    availableCells.add(currentCell);
+                }
+            }
+        }
+        int numOfCells = availableCells.size();
+
+        if (numOfCells == 0) {
+            throw new IllegalArgumentException("Board is full, cannot place in a move");
+        }
+
+        // Pick a random cell
+        int index = (int)(Math.random() * numOfCells);
+
+        // Put player in that cell
+        setCell(availableCells.get(index), player);
+    }
+
+    /**
      * Place a move.
      * @param cell the cell to set
      * @param player making the move

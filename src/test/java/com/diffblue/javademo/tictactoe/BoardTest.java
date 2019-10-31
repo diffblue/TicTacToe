@@ -3,9 +3,15 @@ package com.diffblue.javademo.tictactoe;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
+@RunWith(PowerMockRunner.class)
 public class BoardTest {
 
     @Rule
@@ -15,7 +21,7 @@ public class BoardTest {
     public void playerOEmptyCell() {
         // Arrange
         Board myBoard = new Board();
-        Coordinate cell = new Coordinate(0,0);
+        Coordinate cell = new Coordinate(0, 0);
 
         // Act
         myBoard.setCell(cell, Player.NOUGHT);
@@ -28,8 +34,8 @@ public class BoardTest {
     public void playerXEmptyCell() {
         // Arrange
         Board myBoard = new Board();
-        myBoard.setCell(new Coordinate(0,0), Player.NOUGHT);
-        Coordinate cell = new Coordinate(0,1);
+        myBoard.setCell(new Coordinate(0, 0), Player.NOUGHT);
+        Coordinate cell = new Coordinate(0, 1);
 
         // Act
         myBoard.setCell(cell, Player.CROSS);
@@ -42,7 +48,7 @@ public class BoardTest {
     public void cannotPlaceMoveInUsedCell() {
         // Arrange
         Board myBoard = new Board();
-        Coordinate cell = new Coordinate(0,0);
+        Coordinate cell = new Coordinate(0, 0);
         myBoard.setCell(cell, Player.NOUGHT);
 
         // Act
@@ -54,8 +60,8 @@ public class BoardTest {
     public void playerOTwoMovesInARow() {
         // Arrange
         Board myBoard = new Board();
-        myBoard.setCell(new Coordinate(0,0), Player.NOUGHT);
-        Coordinate cell = new Coordinate(0,1);
+        myBoard.setCell(new Coordinate(0, 0), Player.NOUGHT);
+        Coordinate cell = new Coordinate(0, 1);
 
         // Act
         exception.expect(IllegalArgumentException.class);
@@ -66,15 +72,15 @@ public class BoardTest {
     public void cannotPlayAfterWinning() {
         // Arrange
         Board myBoard = new Board();
-        myBoard.setCell(new Coordinate(0,0), Player.NOUGHT);
-        myBoard.setCell(new Coordinate(0,1), Player.CROSS);
-        myBoard.setCell(new Coordinate(1,0), Player.NOUGHT);
-        myBoard.setCell(new Coordinate(1,1), Player.CROSS);
-        myBoard.setCell(new Coordinate(2,0), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(0, 0), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(0, 1), Player.CROSS);
+        myBoard.setCell(new Coordinate(1, 0), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(1, 1), Player.CROSS);
+        myBoard.setCell(new Coordinate(2, 0), Player.NOUGHT);
 
         // Act
         exception.expect(IllegalArgumentException.class);
-        myBoard.setCell(new Coordinate(2,2), Player.CROSS);
+        myBoard.setCell(new Coordinate(2, 2), Player.CROSS);
     }
 
 
@@ -82,11 +88,11 @@ public class BoardTest {
     public void playerOTopRow() {
         // Arrange
         Board myBoard = new Board();
-        myBoard.setCell(new Coordinate(0,0), Player.NOUGHT);
-        myBoard.setCell(new Coordinate(0,1), Player.CROSS);
-        myBoard.setCell(new Coordinate(1,0), Player.NOUGHT);
-        myBoard.setCell(new Coordinate(1,1), Player.CROSS);
-        myBoard.setCell(new Coordinate(2,0), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(0, 0), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(0, 1), Player.CROSS);
+        myBoard.setCell(new Coordinate(1, 0), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(1, 1), Player.CROSS);
+        myBoard.setCell(new Coordinate(2, 0), Player.NOUGHT);
 
         // Act
         Player result = myBoard.whoHasWon();
@@ -99,11 +105,11 @@ public class BoardTest {
     public void playerOMiddleRow() {
         // Arrange
         Board myBoard = new Board();
-        myBoard.setCell(new Coordinate(0,1), Player.NOUGHT);
-        myBoard.setCell(new Coordinate(0,2), Player.CROSS);
-        myBoard.setCell(new Coordinate(1,1), Player.NOUGHT);
-        myBoard.setCell(new Coordinate(1,2), Player.CROSS);
-        myBoard.setCell(new Coordinate(2,1), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(0, 1), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(0, 2), Player.CROSS);
+        myBoard.setCell(new Coordinate(1, 1), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(1, 2), Player.CROSS);
+        myBoard.setCell(new Coordinate(2, 1), Player.NOUGHT);
 
         // Act
         Player result = myBoard.whoHasWon();
@@ -116,11 +122,11 @@ public class BoardTest {
     public void playerOBottomRow() {
         // Arrange
         Board myBoard = new Board();
-        myBoard.setCell(new Coordinate(0,2), Player.NOUGHT);
-        myBoard.setCell(new Coordinate(0,1), Player.CROSS);
-        myBoard.setCell(new Coordinate(1,2), Player.NOUGHT);
-        myBoard.setCell(new Coordinate(1,1), Player.CROSS);
-        myBoard.setCell(new Coordinate(2,2), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(0, 2), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(0, 1), Player.CROSS);
+        myBoard.setCell(new Coordinate(1, 2), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(1, 1), Player.CROSS);
+        myBoard.setCell(new Coordinate(2, 2), Player.NOUGHT);
 
         // Act
         Player result = myBoard.whoHasWon();
@@ -133,12 +139,12 @@ public class BoardTest {
     public void playerXLeftColumn() {
         // Arrange
         Board myBoard = new Board();
-        myBoard.setCell(new Coordinate(1,2), Player.NOUGHT);
-        myBoard.setCell(new Coordinate(0,0), Player.CROSS);
-        myBoard.setCell(new Coordinate(1,1), Player.NOUGHT);
-        myBoard.setCell(new Coordinate(0,1), Player.CROSS);
-        myBoard.setCell(new Coordinate(2,2), Player.NOUGHT);
-        myBoard.setCell(new Coordinate(0,2), Player.CROSS);
+        myBoard.setCell(new Coordinate(1, 2), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(0, 0), Player.CROSS);
+        myBoard.setCell(new Coordinate(1, 1), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(0, 1), Player.CROSS);
+        myBoard.setCell(new Coordinate(2, 2), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(0, 2), Player.CROSS);
 
         // Act
         Player result = myBoard.whoHasWon();
@@ -151,12 +157,12 @@ public class BoardTest {
     public void playerXMiddleColumn() {
         // Arrange
         Board myBoard = new Board();
-        myBoard.setCell(new Coordinate(2,2), Player.NOUGHT);
-        myBoard.setCell(new Coordinate(1,0), Player.CROSS);
-        myBoard.setCell(new Coordinate(2,1), Player.NOUGHT);
-        myBoard.setCell(new Coordinate(1,1), Player.CROSS);
-        myBoard.setCell(new Coordinate(0,2), Player.NOUGHT);
-        myBoard.setCell(new Coordinate(1,2), Player.CROSS);
+        myBoard.setCell(new Coordinate(2, 2), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(1, 0), Player.CROSS);
+        myBoard.setCell(new Coordinate(2, 1), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(1, 1), Player.CROSS);
+        myBoard.setCell(new Coordinate(0, 2), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(1, 2), Player.CROSS);
 
         // Act
         Player result = myBoard.whoHasWon();
@@ -169,12 +175,12 @@ public class BoardTest {
     public void playerXRightColumn() {
         // Arrange
         Board myBoard = new Board();
-        myBoard.setCell(new Coordinate(1,2), Player.NOUGHT);
-        myBoard.setCell(new Coordinate(2,0), Player.CROSS);
-        myBoard.setCell(new Coordinate(1,1), Player.NOUGHT);
-        myBoard.setCell(new Coordinate(2,1), Player.CROSS);
-        myBoard.setCell(new Coordinate(0,2), Player.NOUGHT);
-        myBoard.setCell(new Coordinate(2,2), Player.CROSS);
+        myBoard.setCell(new Coordinate(1, 2), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(2, 0), Player.CROSS);
+        myBoard.setCell(new Coordinate(1, 1), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(2, 1), Player.CROSS);
+        myBoard.setCell(new Coordinate(0, 2), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(2, 2), Player.CROSS);
 
         // Act
         Player result = myBoard.whoHasWon();
@@ -187,11 +193,11 @@ public class BoardTest {
     public void playerODiagonal() {
         // Arrange
         Board myBoard = new Board();
-        myBoard.setCell(new Coordinate(0,0), Player.NOUGHT);
-        myBoard.setCell(new Coordinate(2,0), Player.CROSS);
-        myBoard.setCell(new Coordinate(1,1), Player.NOUGHT);
-        myBoard.setCell(new Coordinate(2,1), Player.CROSS);
-        myBoard.setCell(new Coordinate(2,2), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(0, 0), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(2, 0), Player.CROSS);
+        myBoard.setCell(new Coordinate(1, 1), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(2, 1), Player.CROSS);
+        myBoard.setCell(new Coordinate(2, 2), Player.NOUGHT);
 
 
         // Act
@@ -205,17 +211,53 @@ public class BoardTest {
     public void playerXDiagonal() {
         // Arrange
         Board myBoard = new Board();
-        myBoard.setCell(new Coordinate(1,2), Player.NOUGHT);
-        myBoard.setCell(new Coordinate(2,0), Player.CROSS);
-        myBoard.setCell(new Coordinate(1,0), Player.NOUGHT);
-        myBoard.setCell(new Coordinate(1,1), Player.CROSS);
-        myBoard.setCell(new Coordinate(0,1), Player.NOUGHT);
-        myBoard.setCell(new Coordinate(0,2), Player.CROSS);
+        myBoard.setCell(new Coordinate(1, 2), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(2, 0), Player.CROSS);
+        myBoard.setCell(new Coordinate(1, 0), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(1, 1), Player.CROSS);
+        myBoard.setCell(new Coordinate(0, 1), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(0, 2), Player.CROSS);
 
         // Act
         Player result = myBoard.whoHasWon();
 
         // Assert
         assertEquals("Player X didn't win in the /", Player.CROSS, result);
+    }
+
+    @Test
+    public void playerXRandomMoveFullBoard() {
+        // Arrange
+        Board myBoard = new Board();
+        myBoard.setCell(new Coordinate(0, 1), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(0, 0), Player.CROSS);
+        myBoard.setCell(new Coordinate(0, 2), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(1, 2), Player.CROSS);
+        myBoard.setCell(new Coordinate(1, 0), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(2, 0), Player.CROSS);
+        myBoard.setCell(new Coordinate(1, 1), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(2, 1), Player.CROSS);
+        myBoard.setCell(new Coordinate(2, 2), Player.NOUGHT);
+
+        // Act
+        exception.expect(IllegalArgumentException.class);
+        myBoard.randomMove(Player.CROSS);
+    }
+    
+    @PrepareForTest({Board.class, Math.class})
+    @Test
+    public void randomMoveInputNoughtOutputIndexOutOfBoundsException() {
+        // Setup mocks
+        mockStatic(Math.class);
+        when(Math.random()).thenReturn(0.5);
+
+        // Arrange
+        Board myBoard = new Board();
+
+        // Act
+        myBoard.randomMove(Player.NOUGHT);
+
+        // Assert
+        assertEquals("Player O not in the middle cell", Player.NOUGHT, myBoard.getCell(new Coordinate(1, 1)));
     }
 }
