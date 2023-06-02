@@ -1,6 +1,8 @@
 package com.diffblue.javademo.tictactoe;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -216,5 +218,41 @@ class BoardTest {
 
         // Assert
         assertEquals(Player.CROSS, result, "Player X didn't win in the /");
+    }
+
+    @Test
+    void playerXRandomMoveFullBoard() {
+        // Arrange
+        Board myBoard = new Board();
+        myBoard.setCell(new Coordinate(0, 1), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(0, 0), Player.CROSS);
+        myBoard.setCell(new Coordinate(0, 2), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(1, 2), Player.CROSS);
+        myBoard.setCell(new Coordinate(1, 0), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(2, 0), Player.CROSS);
+        myBoard.setCell(new Coordinate(1, 1), Player.NOUGHT);
+        myBoard.setCell(new Coordinate(2, 1), Player.CROSS);
+        myBoard.setCell(new Coordinate(2, 2), Player.NOUGHT);
+
+        // Act
+        assertThrows(IllegalArgumentException.class, () -> myBoard.randomMove(Player.CROSS));
+    }
+
+    @Test
+    void randomMoveInputNoughtOutputIndexOutOfBoundsException() {
+        // Setup mocks
+        try (MockedStatic<RandomMove> mockedMove = Mockito.mockStatic(RandomMove.class)) {
+
+            mockedMove.when(RandomMove::generate).thenReturn(0.5);
+
+            // Arrange
+            Board myBoard = new Board();
+
+            // Act
+            myBoard.randomMove(Player.NOUGHT);
+
+            // Assert
+            assertEquals(Player.NOUGHT, myBoard.getCell(new Coordinate(1, 1)), "Player O not in the middle cell");
+        }
     }
 }

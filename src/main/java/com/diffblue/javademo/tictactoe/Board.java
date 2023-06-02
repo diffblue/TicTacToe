@@ -32,7 +32,7 @@ public class Board {
         }
 
         // Pick a random cell
-        int index = (int)(Math.random() * numOfCells);
+        int index = (int)(RandomMove.generate() * numOfCells);
 
         // Put player in that cell
         setCell(availableCells.get(index), player);
