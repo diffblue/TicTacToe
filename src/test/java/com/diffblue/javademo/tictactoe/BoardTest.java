@@ -1,13 +1,13 @@
 package com.diffblue.javademo.tictactoe;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class BoardTest {
+class BoardTest {
 
     @Test
-    public void playerOTopRow() {
+    void playerOTopRow() {
         // Arrange
         Board myBoard = new Board();
         myBoard.setCell(new Coordinate(0,0), Player.NOUGHT);
@@ -20,6 +20,6 @@ public class BoardTest {
         Player result = myBoard.whoHasWon();
 
         // Assert
-        assertEquals("Player O didn't win in the top row", Player.NOUGHT, result);
+        assertEquals(Player.NOUGHT, result, "Player O didn't win in the top row");
     }
 }
