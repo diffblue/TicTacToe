@@ -9,7 +9,7 @@
   <packaging>jar</packaging>
 
   <name>Java Demo Project</name>
-  <url>http://diffblue.com</url>
+  <url>https://www.diffblue.com</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
