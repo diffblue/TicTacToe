@@ -1,37 +1,35 @@
 package com.diffblue.javademo.tictactoe;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class CoordinateTest {
-
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
+class CoordinateTest {
 
     @Test
-    public void invalidCellCol() {
+    void invalidCellCol() {
         // Act
-        exception.expect(IllegalArgumentException.class);
-        Coordinate coordinate = new Coordinate(3,2);
+        assertThrows(IllegalArgumentException.class, () -> {
+            Coordinate coordinate = new Coordinate(3, 2);
+        });
     }
 
     @Test
-    public void invalidCellRow() {
+    void invalidCellRow() {
         // Act
-        exception.expect(IllegalArgumentException.class);
-        Coordinate coordinate = new Coordinate(2,3);
+        assertThrows(IllegalArgumentException.class, () -> {
+            Coordinate coordinate = new Coordinate(2, 3);
+        });
     }
 
     @Test
-    public void validMaxCell() {
+    void validMaxCell() {
         //Act
         Coordinate coordinate = new Coordinate(2,2);
 
         //Assert
-        assertEquals("Column not set to max possible value", 2, coordinate.col);
-        assertEquals("Row not set to to max possible value", 2, coordinate.row);
+        assertEquals(2, coordinate.col, "Column not set to max possible value");
+        assertEquals(2, coordinate.row, "Row not set to to max possible value");
     }
 }
